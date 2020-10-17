@@ -149,6 +149,7 @@ class PrettyPageHandler extends Handler
 
         // blacklist php provided auth based values
         $this->blacklist('_SERVER', 'PHP_AUTH_PW');
+        $this->blacklist('_ENV', 'DB_CONNECTION');
 
         $this->templateHelper = new TemplateHelper();
 

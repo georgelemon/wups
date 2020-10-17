@@ -1,10 +1,11 @@
 <?php
+
+namespace Wups;
+
 /**
  * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
-
-namespace Wups;
 
 use InvalidArgumentException;
 use Wups\Exception\ErrorException;
@@ -15,25 +16,25 @@ use Wups\Handler\HandlerInterface;
 use Wups\Util\Misc;
 use Wups\Util\SystemFacade;
 
-final class Run implements RunInterface
+class Run implements RunInterface
 {
-    private $isRegistered;
-    private $allowQuit       = true;
-    private $sendOutput      = true;
+    protected $isRegistered;
+    protected $allowQuit       = true;
+    protected $sendOutput      = true;
 
     /**
      * @var integer|false
      */
-    private $sendHttpCode    = 500;
+    protected $sendHttpCode    = 500;
 
     /**
      * @var HandlerInterface[]
      */
-    private $handlerStack = [];
+    protected $handlerStack = [];
 
-    private $silencedPatterns = [];
+    protected $silencedPatterns = [];
 
-    private $system;
+    protected $system;
 
     public function __construct(SystemFacade $system = null)
     {

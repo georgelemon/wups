@@ -1,10 +1,11 @@
 <?php
+namespace Wups\Exception;
+
 /**
  * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
+ * @author George Lemon
  */
-
-namespace Wups\Exception;
 
 use ArrayAccess;
 use ArrayIterator;
