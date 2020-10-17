@@ -1,20 +1,20 @@
 <?php
+namespace Wups\Handler;
+
 /**
-* Whoops - php errors for cool kids
+* Wups - php errors for cool kids
 * @author Filipe Dobreira <http://github.com/filp>
 * Plaintext handler for command line and logs.
 * @author Pierre-Yves Landuré <https://howto.biapy.com/>
 */
 
-namespace Whoops\Handler;
-
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
-use Whoops\Exception\Frame;
+use Wups\Exception\Frame;
 
 /**
 * Handler outputing plaintext error messages. Can be used
-* directly, or will be instantiated automagically by Whoops\Run
+* directly, or will be instantiated automagically by Wups\Run
 * if passed to Run::pushHandler
 */
 class PlainTextHandler extends Handler
@@ -221,7 +221,7 @@ class PlainTextHandler extends Handler
 
     /**
      * Get the frame args var_dump.
-     * @param  \Whoops\Exception\Frame $frame [description]
+     * @param  \Wups\Exception\Frame $frame [description]
      * @param  integer                 $line  [description]
      * @return string
      */

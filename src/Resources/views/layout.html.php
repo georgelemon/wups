@@ -1,6 +1,6 @@
 <?php
 /**
-* Layout template file for Whoops's pretty error output.
+* Layout template file for Wups's pretty error output.
 */
 ?>
 <!DOCTYPE html><?php echo $preface; ?>
@@ -15,7 +15,7 @@
   </head>
   <body>
 
-    <div class="Whoops container">
+    <div class="Wups container">
       <div class="stack-container">
 
         <?php $tpl->render($panel_left_outer) ?>

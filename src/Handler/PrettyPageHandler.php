@@ -1,19 +1,19 @@
 <?php
 /**
- * Whoops - php errors for cool kids
+ * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
 
-namespace Whoops\Handler;
+namespace Wups\Handler;
 
 use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Component\VarDumper\Cloner\AbstractCloner;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use UnexpectedValueException;
-use Whoops\Exception\Formatter;
-use Whoops\Util\Misc;
-use Whoops\Util\TemplateHelper;
+use Wups\Exception\Formatter;
+use Wups\Util\Misc;
+use Wups\Util\TemplateHelper;
 
 class PrettyPageHandler extends Handler
 {
@@ -71,7 +71,7 @@ class PrettyPageHandler extends Handler
     /**
      * @var string
      */
-    private $pageTitle = "Whoops! There was an error.";
+    private $pageTitle = "Wups! There was an error.";
 
     /**
      * @var array[]
@@ -155,7 +155,7 @@ class PrettyPageHandler extends Handler
         if (class_exists('Symfony\Component\VarDumper\Cloner\VarCloner')) {
             $cloner = new VarCloner();
             // Only dump object internals if a custom caster exists for performance reasons
-            // https://github.com/filp/whoops/pull/404
+            // https://github.com/filp/Wups/pull/404
             $cloner->addCasters(['*' => function ($obj, $a, $stub, $isNested, $filter = 0) {
                 $class = $stub->class;
                 $classes = [$class => $class] + class_parents($obj) + class_implements($obj);
@@ -184,9 +184,9 @@ class PrettyPageHandler extends Handler
             if (PHP_SAPI === 'cli') {
                 // Help users who have been relying on an internal test value
                 // fix their code to the proper method
-                if (isset($_ENV['whoops-test'])) {
+                if (isset($_ENV['Wups-test'])) {
                     throw new \Exception(
-                        'Use handleUnconditionally instead of whoops-test'
+                        'Use handleUnconditionally instead of Wups-test'
                         .' environment variable'
                     );
                 }
@@ -196,11 +196,11 @@ class PrettyPageHandler extends Handler
         }
 
         $templateFile = $this->getResource("views/layout.html.php");
-        $cssFile      = $this->getResource("css/whoops.base.css");
+        $cssFile      = $this->getResource("css/Wups.base.css");
         $zeptoFile    = $this->getResource("js/zepto.min.js");
         $prettifyFile = $this->getResource("js/prettify.min.js");
         $clipboard    = $this->getResource("js/clipboard.min.js");
-        $jsFile       = $this->getResource("js/whoops.base.js");
+        $jsFile       = $this->getResource("js/Wups.base.js");
 
         if ($this->customCss) {
             $customCssFile = $this->getResource($this->customCss);
@@ -294,7 +294,7 @@ class PrettyPageHandler extends Handler
     /**
      * Get the stack trace frames of the exception currently being handled.
      *
-     * @return \Whoops\Exception\FrameCollection
+     * @return \Wups\Exception\FrameCollection
      */
     protected function getExceptionFrames()
     {
@@ -376,7 +376,7 @@ class PrettyPageHandler extends Handler
             throw new InvalidArgumentException('Expecting callback argument to be callable');
         }
 
-        $this->extraTables[$label] = function (\Whoops\Exception\Inspector $inspector = null) use ($callback) {
+        $this->extraTables[$label] = function (\Wups\Exception\Inspector $inspector = null) use ($callback) {
             try {
                 $result = call_user_func($callback, $inspector);
 

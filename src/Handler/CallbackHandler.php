@@ -1,16 +1,16 @@
 <?php
+namespace Wups\Handler;
+
 /**
- * Whoops - php errors for cool kids
+ * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
-
-namespace Whoops\Handler;
 
 use InvalidArgumentException;
 
 /**
  * Wrapper for Closures passed as handlers. Can be used
- * directly, or will be instantiated automagically by Whoops\Run
+ * directly, or will be instantiated automagically by Wups\Run
  * if passed to Run::pushHandler
  */
 class CallbackHandler extends Handler

@@ -1,10 +1,10 @@
 <?php
 /**
- * Whoops - php errors for cool kids
+ * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
 
-namespace Whoops\Util;
+namespace Wups\Util;
 
 class SystemFacade
 {

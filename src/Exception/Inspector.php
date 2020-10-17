@@ -1,12 +1,12 @@
 <?php
 /**
- * Whoops - php errors for cool kids
+ * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
 
-namespace Whoops\Exception;
+namespace Wups\Exception;
 
-use Whoops\Util\Misc;
+use Wups\Util\Misc;
 
 class Inspector
 {
@@ -16,12 +16,12 @@ class Inspector
     private $exception;
 
     /**
-     * @var \Whoops\Exception\FrameCollection
+     * @var \Wups\Exception\FrameCollection
      */
     private $frames;
 
     /**
-     * @var \Whoops\Exception\Inspector
+     * @var \Wups\Exception\Inspector
      */
     private $previousExceptionInspector;
 
@@ -167,7 +167,7 @@ class Inspector
     /**
      * Returns an iterator for the inspected exception's
      * frames.
-     * @return \Whoops\Exception\FrameCollection
+     * @return \Wups\Exception\FrameCollection
      */
     public function getFrames()
     {

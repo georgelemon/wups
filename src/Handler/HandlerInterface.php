@@ -1,13 +1,13 @@
 <?php
+namespace Wups\Handler;
+
 /**
- * Whoops - php errors for cool kids
+ * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
 
-namespace Whoops\Handler;
-
-use Whoops\Exception\Inspector;
-use Whoops\RunInterface;
+use Wups\Exception\Inspector;
+use Wups\RunInterface;
 
 interface HandlerInterface
 {

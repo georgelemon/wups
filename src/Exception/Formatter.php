@@ -1,10 +1,10 @@
 <?php
 /**
- * Whoops - php errors for cool kids
+ * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
 
-namespace Whoops\Exception;
+namespace Wups\Exception;
 
 class Formatter
 {

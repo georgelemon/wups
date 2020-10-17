@@ -1,13 +1,13 @@
 <?php
 /**
- * Whoops - php errors for cool kids
+ * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
 
-namespace Whoops\Handler;
+namespace Wups\Handler;
 
 use SimpleXMLElement;
-use Whoops\Exception\Formatter;
+use Wups\Exception\Formatter;
 
 /**
  * Catches an exception and converts it to an XML

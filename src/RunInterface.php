@@ -1,14 +1,14 @@
 <?php
 /**
- * Whoops - php errors for cool kids
+ * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
 
-namespace Whoops;
+namespace Wups;
 
 use InvalidArgumentException;
-use Whoops\Exception\ErrorException;
-use Whoops\Handler\HandlerInterface;
+use Wups\Exception\ErrorException;
+use Wups\Handler\HandlerInterface;
 
 interface RunInterface
 {
@@ -57,14 +57,14 @@ interface RunInterface
     public function register();
 
     /**
-     * Unregisters all handlers registered by this Whoops\Run instance
+     * Unregisters all handlers registered by this Wups\Run instance
      *
      * @return Run
      */
     public function unregister();
 
     /**
-     * Should Whoops allow Handlers to force the script to quit?
+     * Should Wups allow Handlers to force the script to quit?
      *
      * @param  bool|int $exit
      * @return bool
@@ -76,13 +76,13 @@ interface RunInterface
      *
      * @param  array|string $patterns List or a single regex pattern to match
      * @param  int          $levels   Defaults to E_STRICT | E_DEPRECATED
-     * @return \Whoops\Run
+     * @return \Wups\Run
      */
     public function silenceErrorsInPaths($patterns, $levels = 10240);
 
     /**
-     * Should Whoops send HTTP error code to the browser if possible?
-     * Whoops will by default send HTTP code 500, but you may wish to
+     * Should Wups send HTTP error code to the browser if possible?
+     * Wups will by default send HTTP code 500, but you may wish to
      * use 502, 503, or another 5xx family code.
      *
      * @param bool|int $code
@@ -91,7 +91,7 @@ interface RunInterface
     public function sendHttpCode($code = null);
 
     /**
-     * Should Whoops push output directly to the client?
+     * Should Wups push output directly to the client?
      * If this is false, output will be returned by handleException
      *
      * @param  bool|int $send
@@ -100,7 +100,7 @@ interface RunInterface
     public function writeToOutput($send = null);
 
     /**
-     * Handles an exception, ultimately generating a Whoops error
+     * Handles an exception, ultimately generating a Wups error
      * page.
      *
      * @param  \Throwable $exception

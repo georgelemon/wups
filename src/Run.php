@@ -1,19 +1,19 @@
 <?php
 /**
- * Whoops - php errors for cool kids
+ * Wups - php errors for cool kids
  * @author Filipe Dobreira <http://github.com/filp>
  */
 
-namespace Whoops;
+namespace Wups;
 
 use InvalidArgumentException;
-use Whoops\Exception\ErrorException;
-use Whoops\Exception\Inspector;
-use Whoops\Handler\CallbackHandler;
-use Whoops\Handler\Handler;
-use Whoops\Handler\HandlerInterface;
-use Whoops\Util\Misc;
-use Whoops\Util\SystemFacade;
+use Wups\Exception\ErrorException;
+use Wups\Exception\Inspector;
+use Wups\Handler\CallbackHandler;
+use Wups\Handler\Handler;
+use Wups\Handler\HandlerInterface;
+use Wups\Util\Misc;
+use Wups\Util\SystemFacade;
 
 final class Run implements RunInterface
 {
@@ -136,10 +136,10 @@ final class Run implements RunInterface
         if (!$this->isRegistered) {
             // Workaround PHP bug 42098
             // https://bugs.php.net/bug.php?id=42098
-            class_exists("\\Whoops\\Exception\\ErrorException");
-            class_exists("\\Whoops\\Exception\\FrameCollection");
-            class_exists("\\Whoops\\Exception\\Frame");
-            class_exists("\\Whoops\\Exception\\Inspector");
+            class_exists("\\Wups\\Exception\\ErrorException");
+            class_exists("\\Wups\\Exception\\FrameCollection");
+            class_exists("\\Wups\\Exception\\Frame");
+            class_exists("\\Wups\\Exception\\Inspector");
 
             $this->system->setErrorHandler([$this, self::ERROR_HANDLER]);
             $this->system->setExceptionHandler([$this, self::EXCEPTION_HANDLER]);
@@ -152,7 +152,7 @@ final class Run implements RunInterface
     }
 
     /**
-     * Unregisters all handlers registered by this Whoops\Run instance
+     * Unregisters all handlers registered by this Wups\Run instance
      * @return Run
      */
     public function unregister()
@@ -168,7 +168,7 @@ final class Run implements RunInterface
     }
 
     /**
-     * Should Whoops allow Handlers to force the script to quit?
+     * Should Wups allow Handlers to force the script to quit?
      * @param  bool|int $exit
      * @return bool
      */
@@ -185,7 +185,7 @@ final class Run implements RunInterface
      * Silence particular errors in particular files
      * @param  array|string $patterns List or a single regex pattern to match
      * @param  int          $levels   Defaults to E_STRICT | E_DEPRECATED
-     * @return \Whoops\Run
+     * @return \Wups\Run
      */
     public function silenceErrorsInPaths($patterns, $levels = 10240)
     {
@@ -216,8 +216,8 @@ final class Run implements RunInterface
     }
 
     /*
-     * Should Whoops send HTTP error code to the browser if possible?
-     * Whoops will by default send HTTP code 500, but you may wish to
+     * Should Wups send HTTP error code to the browser if possible?
+     * Wups will by default send HTTP code 500, but you may wish to
      * use 502, 503, or another 5xx family code.
      *
      * @param bool|int $code
@@ -247,7 +247,7 @@ final class Run implements RunInterface
     }
 
     /**
-     * Should Whoops push output directly to the client?
+     * Should Wups push output directly to the client?
      * If this is false, output will be returned by handleException
      * @param  bool|int $send
      * @return bool
@@ -262,7 +262,7 @@ final class Run implements RunInterface
     }
 
     /**
-     * Handles an exception, ultimately generating a Whoops error
+     * Handles an exception, ultimately generating a Wups error
      * page.
      *
      * @param  \Throwable $exception
@@ -364,20 +364,20 @@ final class Run implements RunInterface
                 $levelMatches = $level & $entry["levels"];
                 if ($pathMatches && $levelMatches) {
                     // Ignore the error, abort handling
-                    // See https://github.com/filp/whoops/issues/418
+                    // See https://github.com/filp/Wups/issues/418
                     return true;
                 }
             }
 
             // XXX we pass $level for the "code" param only for BC reasons.
-            // see https://github.com/filp/whoops/issues/267
+            // see https://github.com/filp/Wups/issues/267
             $exception = new ErrorException($message, /*code*/ $level, /*severity*/ $level, $file, $line);
             if ($this->canThrowExceptions) {
                 throw $exception;
             } else {
                 $this->handleException($exception);
             }
-            // Do not propagate errors which were already handled by Whoops.
+            // Do not propagate errors which were already handled by Wups.
             return true;
         }
 
@@ -425,7 +425,7 @@ final class Run implements RunInterface
         if (!$handler instanceof HandlerInterface) {
             throw new InvalidArgumentException(
                   "Handler must be a callable, or instance of "
-                . "Whoops\\Handler\\HandlerInterface"
+                . "Wups\\Handler\\HandlerInterface"
             );
         }
 
@@ -439,7 +439,7 @@ final class Run implements RunInterface
      */
     private function writeToOutputNow($output)
     {
-        if ($this->sendHttpCode() && \Whoops\Util\Misc::canSendHeaders()) {
+        if ($this->sendHttpCode() && \Wups\Util\Misc::canSendHeaders()) {
             $this->system->setHttpResponseCode(
                 $this->sendHttpCode()
             );
