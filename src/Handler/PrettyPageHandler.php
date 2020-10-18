@@ -197,7 +197,6 @@ class PrettyPageHandler extends Handler
 
         $templateFile = $this->getResource("views/layout.html.php");
         $cssFile      = $this->getResource("css/Wups.base.css");
-        $zeptoFile    = $this->getResource("js/zepto.min.js");
         $prettifyFile = $this->getResource("js/prettify.min.js");
         $clipboard    = $this->getResource("js/clipboard.min.js");
         $jsFile       = $this->getResource("js/Wups.base.js");
