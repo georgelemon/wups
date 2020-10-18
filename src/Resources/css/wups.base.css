@@ -1,6 +1,6 @@
 body {
   font: 12px "Helvetica Neue", helvetica, arial, sans-serif;
-  color: #131313;
+  color:#f5f5f5;
   background: #eeeeee;
   padding:0;
   margin: 0;
@@ -12,7 +12,7 @@ body {
     text-decoration: none;
   }
 
-.Wups.container {
+.Whoops.container {
     position: relative;
     z-index: 9999999999;
 }
@@ -41,9 +41,9 @@ body {
 header {
   color: white;
   box-sizing: border-box;
-  background-color: #2a2a2a;
+  background-color: #0c1417;
   padding: 35px 40px;
-  max-height: 180px;
+  max-height: inherit !important;
   overflow: hidden;
   transition: 0.5s;
 }
@@ -74,6 +74,13 @@ header {
         color: #a29d9d;
         font-weight: 300;
       }
+
+    .exc-message button {
+      border-radius:10px !important;
+      padding: 3px 10px !important;
+      border:0 !important;
+      outline:none !important;
+    }
 
 .prev-exc-title {
   margin: 10px 0;
@@ -112,8 +119,8 @@ header {
     }
 
     .details pre.sf-dump {
-      white-space: pre;
-      word-wrap: inherit;
+      /*white-space: pre;*/
+      /*word-wrap: inherit;*/
     }
 
     .details pre.sf-dump,
@@ -133,7 +140,7 @@ header {
 
 .left-panel {
   width: 30%;
-  background: #ded8d8;
+  background-color: #18181e;
 }
 
   .frames-description {
@@ -168,19 +175,20 @@ header {
     padding: 14px;
     cursor: pointer;
     transition: all 0.1s ease;
-    background: #eeeeee;
+    background: #162024;
   }
     .frame:not(:last-child) {
       border-bottom: 1px solid rgba(0, 0, 0, .05);
     }
 
     .frame.active {
-      box-shadow: inset -5px 0 0 0 #4288CE;
-      color: #4288CE;
+      box-shadow: inset -5px 0 0 0 blue;
+      color: blueviolet;
+      background-color: #23232b;
     }
 
     .frame:not(.active):hover {
-      background: #BEE9EA;
+      background: #292227;
     }
 
     .frame-method-info {
@@ -236,12 +244,13 @@ header {
 
     .frame-code {
       padding: 5px;
-      background: #303030;
+      background: #162023;
       display: none;
     }
 
     .frame-code.active {
       display: block;
+      height:100vh;
     }
 
     .frame-code .frame-file {
@@ -323,8 +332,11 @@ header {
   padding-bottom: 5px;
 }
   .data-table {
+    border-spacing:0;
     width: 100%;
     margin-bottom: 10px;
+    table-layout: fixed;
+    overflow-wrap: anywhere;
   }
 
   .data-table tbody {
@@ -339,8 +351,17 @@ header {
     padding: 5px 0;
   }
 
+  .data-table tr:nth-child(2n){
+    background-color: #EEE;
+  }
+
+  .data-table td {
+    border-bottom: 1px #DDD solid;
+    padding: 5px;
+  }
+
   .data-table td:first-child {
-    width: 20%;
+    width: 25%;
     min-width: 130px;
     overflow: hidden;
     font-weight: bold;
@@ -350,7 +371,7 @@ header {
   }
 
   .data-table td:last-child {
-    width: 80%;
+    width: 75%;
     -ms-word-break: break-all;
     word-break: break-all;
     word-break: break-word;
@@ -374,7 +395,7 @@ header {
 
 /* prettify code style
 Uses the Doxy theme as a base */
-pre .str, code .str { color: #BCD42A; }  /* string  */
+pre .str, code .str { color: #A5A5A5; }  /* string  */
 pre .kwd, code .kwd { color: #4bb1b1;  font-weight: bold; }  /* keyword*/
 pre .com, code .com { color: #888; font-weight: bold; } /* comment */
 pre .typ, code .typ { color: #ef7c61; }  /* type  */
@@ -389,9 +410,14 @@ pre .atv, code .atv { color: #bcd42a; }  /* html/xml attribute value  */
 pre .dec, code .dec { color: #606; }  /* decimal  */
 pre.code-block, code.code-block, .frame-args.code-block, .frame-args.code-block samp {
   font-family: "Inconsolata", "Fira Mono", "Source Code Pro", Monaco, Consolas, "Lucida Console", monospace;
-  background: #333;
+  background-color: #0c1417;
   color: #e9e4e5;
 }
+
+  pre#frame-code-linenums-0.code-block {
+    max-height:450px !important;
+  }
+
   pre.code-block {
     white-space: pre-wrap;
   }
@@ -408,7 +434,11 @@ pre.code-block, code.code-block, .frame-args.code-block, .frame-args.code-block 
     background: rgba(255, 100, 100, .07);
   }
     .linenums li.current.active {
-      background: rgba(255, 100, 100, .17);
+      background: rgba(255, 55, 43, 0.58);
+    }
+
+    .linenums li.current.active .str {
+      color:#FF9;
     }
 
 pre:not(.prettyprinted) {
@@ -424,19 +454,16 @@ pre:not(.prettyprinted) {
   border: 0;
   opacity: .8;
   background: none;
-
   color: rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.1);
-
-  border-radius: 3px;
-
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-radius: 10px !important;
   outline: none !important;
 }
 
-  .rightButton:hover {
-    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3);
-    color: rgba(255, 255, 255, 0.3);
-  }
+.rightButton:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.3);
+}
 
 /* inspired by githubs kbd styles */
 kbd {
@@ -557,7 +584,7 @@ kbd {
 }
 .tooltipped-s:after {
   top: 100%;
-  right: 50%;
+  left: 0;
   margin-top: 5px
 }
 .tooltipped-s:before {
@@ -574,7 +601,7 @@ pre.sf-dump {
 }
 
 .search-for-help {
-  width: 85%;
+  width: 100%;
   padding: 0;
   margin: 10px 0;
   list-style-type: none;

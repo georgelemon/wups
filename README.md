@@ -1,5 +1,5 @@
-# whoops
-PHP errors for cool kids
+# Wups
+Modern PHP Debugger for cool developers (Originally forked from Whoops).
 
 [![Total Downloads](https://img.shields.io/packagist/dm/filp/whoops.svg)](https://packagist.org/packages/filp/whoops)
 [![Latest Version](http://img.shields.io/packagist/v/filp/whoops.svg)](https://packagist.org/packages/filp/whoops)
@@ -10,11 +10,17 @@ PHP errors for cool kids
 
 -----
 
-![Whoops!](http://i.imgur.com/0VQpe96.png)
+![Wups!](.github/wups.png)
 
-**whoops** is an error handler framework for PHP. Out-of-the-box, it provides a pretty
+**Wups** is an error handler framework for PHP. Out-of-the-box, it provides a pretty
 error interface that helps you debug your web projects, but at heart it's a simple yet
 powerful stacked error handling system.
+
+**Why Wups not Whoops?**
+Wups is a modified version of Whoops.<br>
+First of, with Wups you get a nice modern dark theme by default (the light one is work in progress). All necessary Javascript is written in pure Vanilla.
+
+Also, **Wups will never disclose environment details.** So, you can let the Wups Debugger ON even when you're in production. (which is not really recommended... really).
 
 ## Features
 
@@ -26,53 +32,31 @@ powerful stacked error handling system.
 - Includes handlers for different response formats (JSON, XML, SOAP)
 - Easy to extend and integrate with existing libraries
 - Clean, well-structured & tested code-base
-
-## Sponsors
-
-<a href="https://blackfire.io/docs/introduction?utm_source=whoops&amp;utm_medium=github_readme&amp;utm_campaign=logo"><img src="https://i.imgur.com/zR8rsqk.png" alt="Blackfire.io" width="254" height="64"></a>
+- Modern dark theme
 
 ## Installing
-If you use Laravel 4 or Laravel 5.5+, you already have Whoops. There are also community-provided instructions on how to integrate Whoops into
-[Silex 1](https://github.com/whoops-php/silex-1),
-[Silex 2](https://github.com/texthtml/whoops-silex),
-[Phalcon](https://github.com/whoops-php/phalcon),
-[Laravel 3](https://gist.github.com/hugomrdias/5169713#file-start-php),
-[Laravel 5](https://github.com/GrahamCampbell/Laravel-Exceptions),
-[CakePHP 2](https://github.com/oldskool/WhoopsCakephp/tree/cake2),
-[CakePHP 3](https://github.com/oldskool/WhoopsCakephp),
-[Zend 2](https://github.com/ghislainf/zf2-whoops),
-[Zend 3](https://github.com/Ppito/zf3-whoops),
-[Yii 1](https://github.com/igorsantos07/yii-whoops),
-[FuelPHP](https://github.com/indigophp/fuel-whoops),
-[Slim](https://github.com/zeuxisoo/php-slim-whoops/),
-[Pimple](https://github.com/texthtml/whoops-pimple),
-[Laminas](https://github.com/Ppito/laminas-whoops),
-or any framework consuming [StackPHP middlewares](https://github.com/thecodingmachine/whoops-stackphp)
-or [PSR-7 middlewares](https://github.com/franzliedke/whoops-middleware).
 
-If you are not using any of these frameworks, here's a very simple way to install:
-
-1. Use [Composer](http://getcomposer.org) to install Whoops into your project:
+1. Composer to go (not published yet):
 
     ```bash
-    composer require filp/whoops
+    composer require georgelemon/wups
     ```
 
 1. Register the pretty handler in your code:
 
     ```php
-    $whoops = new \Whoops\Run;
-    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops = new \Wups\Run;
+    $whoops->pushHandler(new \Wups\Handler\PrettyPageHandler);
     $whoops->register();
     ```
 
 For more options, have a look at the **example files** in `examples/` to get a feel for how things work. Also take a look at the [API Documentation](docs/API%20Documentation.md) and the list of available handlers below.
 
-You may also want to override some system calls Whoops does. To do that, extend `Whoops\Util\SystemFacade`, override functions that you want and pass it as the argument to the `Run` constructor.
+You may also want to override some system calls Wups does. To do that, extend `Wups\Util\SystemFacade`, override functions that you want and pass it as the argument to the `Run` constructor.
 
 ### Available Handlers
 
-**whoops** currently ships with the following built-in handlers, available in the `Whoops\Handler` namespace:
+**Wups**, like it's predecessor (Whoops), ships with the following built-in handlers, available in the `Wups\Handler` namespace:
 
 - [`PrettyPageHandler`](https://github.com/filp/whoops/blob/master/src/Whoops/Handler/PrettyPageHandler.php) - Shows a pretty error page when something goes pants-up
 - [`PlainTextHandler`](https://github.com/filp/whoops/blob/master/src/Whoops/Handler/PlainTextHandler.php) - Outputs plain text message for use in CLI applications
@@ -84,6 +68,6 @@ You can also use pluggable handlers, such as [SOAP handler](https://github.com/w
 
 ## Authors
 
-This library was primarily developed by [Filipe Dobreira](https://github.com/filp), and is currently maintained by [Denis Sokolov](https://github.com/denis-sokolov). A lot of awesome fixes and enhancements were also sent in by [various contributors](https://github.com/filp/whoops/contributors). Special thanks to [Graham Campbell](https://github.com/GrahamCampbell) and [Markus Staab](https://github.com/staabm) for continuous participation.
+Wups is maintained by George Lemon. Originally forked from [Whoops](https://github.com/filp/whoops), by [Filipe Dobreira](https://github.com/filp) & [Denis Sokolov](https://github.com/denis-sokolov). A lot of awesome fixes and enhancements were also sent in by [various contributors](https://github.com/filp/whoops/contributors). Special thanks to [Graham Campbell](https://github.com/GrahamCampbell) and [Markus Staab](https://github.com/staabm) for continuous participation.
 
 This software includes [Prettify](https://github.com/google/code-prettify), licensed under Apache License 2.0. It is bundled only as a performance optimization.

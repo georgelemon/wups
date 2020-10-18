@@ -32,8 +32,16 @@ class Run implements RunInterface
      */
     protected $handlerStack = [];
 
+    /**
+     * [$silencedPatterns description]
+     * @var array
+     */
     protected $silencedPatterns = [];
 
+    /**
+     * [$system description]
+     * @var [type]
+     */
     protected $system;
 
     public function __construct(SystemFacade $system = null)

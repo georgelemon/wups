@@ -29,7 +29,9 @@
             $start = key($range) + 1;
             $code  = join("\n", $range);
         ?>
-            <pre id="frame-code-linenums-<?=$i?>" class="code-block linenums:<?php echo $start ?>"><?php echo $tpl->escape($code) ?></pre>
+            <pre id="frame-code-linenums-<?=$i?>" class="code-block linenums:<?php echo $start ?>">
+              <?php echo $tpl->escape($code) ?>
+            </pre>
 
           <?php endif ?>
         <?php endif ?>

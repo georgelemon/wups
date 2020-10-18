@@ -1,22 +1,28 @@
-Zepto(function($) {
-  var $leftPanel      = $('.left-panel');
-  var $frameContainer = $('.frames-container');
-  var $appFramesTab   = $('#application-frames-tab');
-  var $allFramesTab   = $('#all-frames-tab');
-  var $container      = $('.details-container');
-  var $activeLine     = $frameContainer.find('.frame.active');
-  var $activeFrame    = $container.find('.frame-code.active');
-  var $ajaxEditors    = $('.editor-link[data-ajax]');
-  var $header         = $('header');
+/**
+ * Going fully Vanilla JS without dependencies
+ * @since wups
+ */
+let header             = document.querySelector('header');
+let messageContainer   = document.querySelector('.exception');
+let leftPanel          = document.querySelector('.left-panel');
+let frameContainer     = document.querySelector('.frames-container');
+let appFramesTab       = document.getElementById('application-frames-tab');
+let allFramesTab       = document.getElementById('all-frames-tab');
+let container          = document.querySelector('.details-container');
+let activeLine         = frameContainer.querySelector('.frame.active');
+let frameFiles         = frameContainer.querySelectorAll('.frame');
+let activeFrame        = container.querySelector('.frame-code.active');
+let ajaxEditors        = document.querySelector('.editor-link[data-ajax]');
 
-  $header.on('mouseenter', function () {
-    if ($header.find('.exception').height() >= 145) {
-      $header.addClass('header-expand');
-    }
-  });
-  $header.on('mouseleave', function () {
-    $header.removeClass('header-expand');
-  });
+
+    header.addEventListener('mouseenter', e => {
+        if( messageContainer.offsetHeight >= 140 ) {
+            header.classList.add('header-expand');
+        }
+    });
+    header.addEventListener('mouseleave', e => {
+        header.classList.remove('header-expand');
+    });
 
   /*
    * add prettyprint classes to our current active codeblock
@@ -26,127 +32,142 @@ Zepto(function($) {
    */
   var renderCurrentCodeblock = function(id) {
 
-    // remove previous codeblocks so we only render the active one
-    $('.code-block').removeClass('prettyprint');
+        // remove previous codeblocks so we only render the active one
+        document.querySelector('.code-block').classList.remove('prettyprint');
 
-    // pass the id in when we can for speed
-    if (typeof(id) === 'undefined' || typeof(id) === 'object') {
-      var id = /frame\-line\-([\d]*)/.exec($activeLine.attr('id'))[1];
+        // pass the id in when we can for speed
+        if (typeof(id) === 'undefined' || typeof(id) === 'object') {
+          var id = /frame\-line\-([\d]*)/.exec(activeLine.getAttribute('id'))[1];
+        }
+
+        // Prettify current code frame
+        document.getElementById('frame-code-linenums-' + id).classList.add('prettyprint');
+
+        // Get the Code Arguments container when available
+        if( codeArgsContainer =  document.getElementById('frame-code-args-' + id ) ) {
+            codeArgsContainer.classList.add('prettyprint');
+        }
+
+        prettyPrint(highlightCurrentLine);
+
     }
 
-    $('#frame-code-linenums-' + id).addClass('prettyprint');
-    $('#frame-code-args-' + id).addClass('prettyprint');
+    /*
+     * Highlight the active and neighboring lines for the current frame
+     * Adjust the offset to make sure that line is veritcally centered
+     */
+    var highlightCurrentLine = function() {
 
-    prettyPrint(highlightCurrentLine);
+        // get the current code block view
+        let currentBlock     = activeFrame.querySelector('.code-block');
 
-  }
+        // get the current line from stack
+        let activeLineNumber = activeLine.querySelector('.frame-line').textContent;
 
-  /*
-   * Highlight the active and neighboring lines for the current frame
-   * Adjust the offset to make sure that line is veritcally centered
-   */
+        // get all lines from current code block
+        let lines            = activeFrame.querySelectorAll('.linenums li');
 
-  var highlightCurrentLine = function() {
-    var activeLineNumber = +($activeLine.find('.frame-line').text());
-    var $lines           = $activeFrame.find('.linenums li');
-    var firstLine        = +($lines.first().val());
+        // get the first line of the 
+        let firstLine        = lines[0].getAttribute('value');
 
-    // We show more code than needed, purely for proper syntax highlighting
-    // Let’s hide a big chunk of that code and then scroll the remaining block
-    $activeFrame.find('.code-block').first().css({
-      maxHeight: 345,
-      overflow: 'hidden',
+        // We show more code than needed, purely for proper syntax highlighting
+        // Let’s hide a big chunk of that code and then scroll the remaining block
+        currentBlock.style.cssText = 'max-height:345px;overflow:hidden;';
+
+        // offset scroll view
+        let offset = lines[activeLineNumber - firstLine - 10];
+
+        // Scroll Content View
+        // @see https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+        if (offset.textContent.length > 0) {
+            offset.scrollIntoView();
+        }
+
+        /**
+         * Highlight lines
+         */
+        lines[activeLineNumber - firstLine - 1].classList.add('current');
+        lines[activeLineNumber - firstLine].classList.add('current', 'active');
+        lines[activeLineNumber - firstLine + 1].classList.add('current');
+        
+        container.scrollTop = 0; // force scroll top
+
+    }
+
+    /**
+     * Parse Stack Frames Sidebar
+     */
+    frameFiles.forEach(function(item) {
+
+        item.addEventListener('click', function(event) {
+            
+            let target = event.currentTarget;
+            let id = /frame\-line\-([\d]*)/.exec(target.getAttribute('id'))[1];
+
+            if (codeFrame = document.getElementById('frame-code-' + id)) {
+
+                // remove active class
+                activeLine.classList.remove('active');
+                activeFrame.classList.remove('active');
+
+                // set active the current container 
+                target.classList.add('active');
+                codeFrame.classList.add('active');
+
+                activeLine  = target;
+                activeFrame = codeFrame;
+                renderCurrentCodeblock(id);
+            }
+
+        });
     });
 
-    var $offset = $($lines[activeLineNumber - firstLine - 10]);
-    if ($offset.length > 0) {
-      $offset[0].scrollIntoView();
+    /**
+     * Clipboard Plugin
+     */
+    function fallbackMessage(action) {
+        var actionMsg = '';
+        var actionKey = (action === 'cut' ? 'X' : 'C');
+
+        if (/Mac/i.test(navigator.userAgent)) {
+            actionMsg = 'Press ⌘-' + actionKey + ' to ' + action;
+        } else {
+            actionMsg = 'Press Ctrl-' + actionKey + ' to ' + action;
+        }
+
+        return actionMsg;
     }
 
-    $($lines[activeLineNumber - firstLine - 1]).addClass('current');
-    $($lines[activeLineNumber - firstLine]).addClass('current active');
-    $($lines[activeLineNumber - firstLine + 1]).addClass('current');
+    let clipboard = new Clipboard('.clipboard');
+    let showTooltip = function(elem, msg) {
+        elem.setAttribute('class', 'clipboard tooltipped tooltipped-s');
+        elem.setAttribute('aria-label', msg);
+    };
 
-    $container.scrollTop(0);
+    clipboard.on('success', function(e) {
+        e.clearSelection();
+        showTooltip(e.trigger, 'Copied!');
+    });
 
-  }
+    clipboard.on('error', function(e) {
+        showTooltip(e.trigger, fallbackMessage(e.action));
+    });
+    
+    document.querySelector('.clipboard').addEventListener('mouseleave', function(e) {
+        e.currentTarget.classList.add('clipboard');
+        e.currentTarget.removeAttribute('aria-label');
+    });    
 
-  /*
-   * click handler for loading codeblocks
-   */
 
-  $frameContainer.on('click', '.frame', function() {
-
-    var $this  = $(this);
-    var id     = /frame\-line\-([\d]*)/.exec($this.attr('id'))[1];
-    var $codeFrame = $('#frame-code-' + id);
-
-    if ($codeFrame) {
-
-      $activeLine.removeClass('active');
-      $activeFrame.removeClass('active');
-
-      $this.addClass('active');
-      $codeFrame.addClass('active');
-
-      $activeLine  = $this;
-      $activeFrame = $codeFrame;
-
-      renderCurrentCodeblock(id);
-
-    }
-
-  });
-
-  var clipboard = new Clipboard('.clipboard');
-  var showTooltip = function(elem, msg) {
-    elem.setAttribute('class', 'clipboard tooltipped tooltipped-s');
-    elem.setAttribute('aria-label', msg);
-  };
-
-  clipboard.on('success', function(e) {
-      e.clearSelection();
-
-      showTooltip(e.trigger, 'Copied!');
-  });
-
-  clipboard.on('error', function(e) {
-      showTooltip(e.trigger, fallbackMessage(e.action));
-  });
-
-  var btn = document.querySelector('.clipboard');
-
-  btn.addEventListener('mouseleave', function(e) {
-    e.currentTarget.setAttribute('class', 'clipboard');
-    e.currentTarget.removeAttribute('aria-label');
-  });
-
-  function fallbackMessage(action) {
-    var actionMsg = '';
-    var actionKey = (action === 'cut' ? 'X' : 'C');
-
-    if (/Mac/i.test(navigator.userAgent)) {
-        actionMsg = 'Press ⌘-' + actionKey + ' to ' + action;
-    } else {
-        actionMsg = 'Press Ctrl-' + actionKey + ' to ' + action;
-    }
-
-    return actionMsg;
-  }
-
-  function scrollIntoView($node, $parent) {
-    var nodeOffset = $node.offset();
-    var nodeTop = nodeOffset.top;
-    var nodeBottom = nodeTop + nodeOffset.height;
-    var parentScrollTop = $parent.scrollTop();
-    var parentHeight = $parent.height();
-
-    if (nodeTop < 0) {
-      $parent.scrollTop(parentScrollTop + nodeTop);
-    } else if (nodeBottom > parentHeight) {
-      $parent.scrollTop(parentScrollTop + nodeBottom - parentHeight);
-    }
-  }
+Zepto(function($) {
+  // var $leftPanel      = $('.left-panel');
+  var $frameContainer = $('.frames-container');
+  var $appFramesTab   = $('#application-frames-tab');
+  var $allFramesTab   = $('#all-frames-tab');
+  var $container      = $('.details-container');
+  var $activeLine     = $frameContainer.find('.frame.active');
+  var $activeFrame    = $container.find('.frame-code.active');
+  var $ajaxEditors    = $('.editor-link[data-ajax]');
 
   $(document).on('keydown', function(e) {
     var applicationFrames = $frameContainer.hasClass('frames-container-application'),
@@ -159,12 +180,12 @@ Zepto(function($) {
 		  // 3) focus the (right) container, so arrow-up/down (without ctrl) scroll the details
 		  if (e.which === 38 /* arrow up */ || e.which === 75 /* k */) {
 			  $activeLine.prev(frameClass).click();
-			  scrollIntoView($activeLine, $leftPanel);
+			  scrollIntoView($activeLine, leftPanel);
 			  $container.focus();
 			  e.preventDefault();
 		  } else if (e.which === 40 /* arrow down */ || e.which === 74 /* j */) {
 			  $activeLine.next(frameClass).click();
-			  scrollIntoView($activeLine, $leftPanel);
+			  scrollIntoView($activeLine, leftPanel);
 			  $container.focus();
 			  e.preventDefault();
 		  }
