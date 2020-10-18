@@ -34,6 +34,11 @@ Also, **Wups will never disclose environment details.** So, you can let the Wups
 - Clean, well-structured & tested code-base
 - Modern dark theme
 
+## TODOS
+- Light theme
+- Switching themes based on OS preference / Include manual switcher
+- Wups in Background **App Monitoring, Error Tracking & Reporting Support**
+
 ## Installing
 
 1. Composer to go (not published yet):
