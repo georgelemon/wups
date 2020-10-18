@@ -5,14 +5,14 @@
     "keywords": ["library", "error", "handling", "exception", "whoops", "wups", "throwable"],
     "authors": [
         {
-            "name": "Filipe Dobreira",
-            "homepage": "https://github.com/filp",
-            "role": "Developer"
-        },
-        {
             "name": "George Lemon",
             "homepage": "https://github.com/filp",
             "role": "Developer & Maintainer"
+        },
+        {
+            "name": "Filipe Dobreira",
+            "homepage": "https://github.com/filp",
+            "role": "Developer"
         }
     ],
     "require": {
