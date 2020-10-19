@@ -20,7 +20,6 @@
             </div>
         </div>
         <script><?php echo $prettify ?></script>
-        <script><?php echo $zepto ?></script>
         <script><?php echo $clipboard ?></script>
         <script><?php echo $javascript ?></script>
     </body>
