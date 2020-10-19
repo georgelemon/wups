@@ -27,6 +27,11 @@ class PrettyPageHandler extends Handler
     const EDITOR_ATOM = "atom";
     const EDITOR_ESPRESSO = "espresso";
     const EDITOR_XDEBUG = "xdebug";
+    
+    /**
+     * Default theme
+     */
+    protected const THEME = 'dark';
 
     /**
      * Search paths to be scanned for resources.
@@ -134,6 +139,7 @@ class PrettyPageHandler extends Handler
      */
     public function __construct()
     {
+
         if (ini_get('xdebug.file_link_format') || extension_loaded('xdebug')) {
             // Register editor using xdebug's file_link_format option.
             $this->editors['xdebug'] = function ($file, $line) {
@@ -195,12 +201,12 @@ class PrettyPageHandler extends Handler
             }
         }
 
-        $templateFile = $this->getResource("views/layout.html.php");
-        $cssFile      = $this->getResource("css/wups.base.css");
-        // $cssFile      = $this->getResource("css/wups.light.css");
-        $prettifyFile = $this->getResource("js/prettify.min.js");
-        $clipboard    = $this->getResource("js/clipboard.min.js");
-        $jsFile       = $this->getResource("js/Wups.base.js");
+        $templateFile    = $this->getResource("views/layout.html.php");
+        $darkTheme       = $this->getResource("css/wups.dark.css");
+        $lightTheme      = $this->getResource("css/wups.light.css");
+        $prettifyFile    = $this->getResource("js/prettify.min.js");
+        $clipboard       = $this->getResource("js/clipboard.min.js");
+        $jsFile          = $this->getResource("js/Wups.base.js");
 
         if ($this->customCss) {
             $customCssFile = $this->getResource($this->customCss);
@@ -214,13 +220,23 @@ class PrettyPageHandler extends Handler
         $frames = $this->getExceptionFrames();
         $code = $this->getExceptionCode();
 
+
+        /**
+         * Handle preferred theme.
+         * When requested theme does not exist it will fallback to default one
+         */
+        if( ! in_array(static::THEME, ['light', 'dark']) ) {
+            $theme = self::THEME === 'dark' ? $darkTheme : $lightTheme;
+        } else {
+            $theme = static::THEME === 'dark' ? $darkTheme : $lightTheme;
+        }
+
         // List of variables that will be passed to the layout template.
         $vars = [
             "page_title" => $this->getPageTitle(),
 
             // @todo: Asset compiler
-            "stylesheet" => file_get_contents($cssFile),
-            "zepto"      => file_get_contents($zeptoFile),
+            "stylesheet" => file_get_contents($theme),
             "prettify"   => file_get_contents($prettifyFile),
             "clipboard"  => file_get_contents($clipboard),
             "javascript" => file_get_contents($jsFile),
