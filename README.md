@@ -33,9 +33,10 @@ Also, **Wups will never disclose environment details.** So, you can let the Wups
 - Easy to extend and integrate with existing libraries
 - Clean, well-structured & tested code-base
 - Modern dark theme
+- Light theme (todo tweaks)
+- Manual switcher
 
 ## TODOS
-- Light theme
 - Switching themes based on OS preference / Include manual switcher
 - Wups in Background **App Monitoring, Error Tracking & Reporting Support**
 
@@ -58,6 +59,16 @@ Also, **Wups will never disclose environment details.** So, you can let the Wups
 For more options, have a look at the **example files** in `examples/` to get a feel for how things work. Also take a look at the [API Documentation](docs/API%20Documentation.md) and the list of available handlers below.
 
 You may also want to override some system calls Wups does. To do that, extend `Wups\Util\SystemFacade`, override functions that you want and pass it as the argument to the `Run` constructor.
+
+### Switching themes
+Since Wups you can choose from dark/light theme. By default, dark theme will be enabled.
+You can manually choose the theme by specifying 'dark', or 'light' to the THEME constant, like
+```php
+    /**
+     * Default theme
+     */
+protected const THEME = 'dark';
+```
 
 ### Available Handlers
 
