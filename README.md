@@ -64,9 +64,9 @@ You may also want to override some system calls Wups does. To do that, extend `W
 Since Wups you can choose from dark/light theme. By default, dark theme will be enabled.
 You can manually choose the theme by specifying 'dark', or 'light' to the THEME constant, like
 ```php
-    /**
-     * Default theme
-     */
+/**
+ * Default theme
+ */
 protected const THEME = 'dark';
 ```
 
