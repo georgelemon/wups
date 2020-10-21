@@ -206,7 +206,7 @@ class PrettyPageHandler extends Handler
         $lightTheme      = $this->getResource("css/wups.light.css");
         $prettifyFile    = $this->getResource("js/prettify.min.js");
         $clipboard       = $this->getResource("js/clipboard.min.js");
-        $jsFile          = $this->getResource("js/Wups.base.js");
+        $jsFile          = $this->getResource("js/wups.base.js");
 
         if ($this->customCss) {
             $customCssFile = $this->getResource($this->customCss);
